@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import { AnalyzerShell } from "./components/AnalyzerShell";
+import { AnalyzerShell } from "./components/AnalyzerShell/AnalyzerShell";
 
 export default function Home() {
   return (
