@@ -29,6 +29,7 @@ export function AnalyzerShell() {
             />
             <PreviewSocial
               url={analysis?.normalizedUrl ?? "https://www.seusite.com"}
+              meta={analysis?.meta ?? {}}
               openGraph={analysis?.openGraph ?? {}}
               twitter={analysis?.twitter ?? {}}
             />
