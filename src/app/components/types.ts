@@ -1,4 +1,4 @@
-export type Severity = "info" | "warning" | "error";
+export type Severity = "info" | "warning" | "error" | "success";
 
 export type SeoIssue = {
   id: string;

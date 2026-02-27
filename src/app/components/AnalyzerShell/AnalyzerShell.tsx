@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./AnalyzerShell.module.css";
 import { UrlForm } from "../UrlForm/UrlForm";
 import { IssueList } from "../IssueList/IssueList";
+import { SeoSummary } from "../SeoSummary/SeoSummary";
 import { PreviewGoogle } from "../PreviewGoogle/PreviewGoogle";
 import { PreviewSocial } from "../PreviewSocial/PreviewSocial";
 import type { SeoAnalysisResult } from "../types";
@@ -17,25 +18,30 @@ export function AnalyzerShell() {
         <UrlForm onResult={setAnalysis} />
       </section>
 
-      <section className={styles.sectionGrid}>
-        <div className={styles.column}>
-          <IssueList issues={analysis?.issues ?? []} />
-        </div>
-        <div className={styles.column}>
-          <div className={styles.previews}>
-            <PreviewGoogle
-              url={analysis?.normalizedUrl ?? "https://www.seusite.com"}
-              meta={analysis?.meta ?? {}}
-            />
-            <PreviewSocial
-              url={analysis?.normalizedUrl ?? "https://www.seusite.com"}
-              meta={analysis?.meta ?? {}}
-              openGraph={analysis?.openGraph ?? {}}
-              twitter={analysis?.twitter ?? {}}
-            />
-          </div>
-        </div>
-      </section>
+      {analysis && (
+        <>
+          <SeoSummary issues={analysis.issues} />
+          <section className={styles.sectionGrid}>
+            <div className={styles.column}>
+              <IssueList issues={analysis.issues} />
+            </div>
+            <div className={styles.column}>
+              <div className={styles.previews}>
+                <PreviewGoogle
+                  url={analysis.normalizedUrl}
+                  meta={analysis.meta}
+                />
+                <PreviewSocial
+                  url={analysis.normalizedUrl}
+                  meta={analysis.meta}
+                  openGraph={analysis.openGraph}
+                  twitter={analysis.twitter}
+                />
+              </div>
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
 
-type Severity = "info" | "warning" | "error";
+type Severity = "info" | "warning" | "error" | "success";
 
 type SeoIssue = {
   id: string;
@@ -197,6 +197,8 @@ function evaluateSeo(
         "title",
         "Tente manter o título entre 50 e 60 caracteres para evitar truncamento nas SERPs.",
       );
+    } else {
+      push("title_ok", "success", `O título tem um bom tamanho (${len} caracteres).`, "title");
     }
   }
 
@@ -227,6 +229,8 @@ function evaluateSeo(
         "description",
         "Reduza para cerca de 160 caracteres para minimizar truncamento.",
       );
+    } else {
+      push("description_ok", "success", `A meta description tem um bom tamanho (${len} caracteres).`, "description");
     }
   }
 
@@ -243,6 +247,7 @@ function evaluateSeo(
     try {
       const normalized = normalizeUrl(url);
       const canonicalNormalized = normalizeUrl(meta.canonical);
+      let canonicalError = false;
       if (canonicalNormalized && !canonicalNormalized.startsWith("http")) {
         push(
           "canonical_relative",
@@ -251,13 +256,13 @@ function evaluateSeo(
           "canonical",
           "Prefira sempre URLs absolutas na tag canonical (incluindo protocolo e domínio).",
         );
+        canonicalError = true;
       }
       if (
         canonicalNormalized &&
         normalized !== canonicalNormalized &&
         !canonicalNormalized.endsWith("/")
       ) {
-        // Apenas um aviso leve; não é necessariamente erro.
         push(
           "canonical_differs",
           "info",
@@ -265,6 +270,9 @@ function evaluateSeo(
           "canonical",
           "Verifique se a canonical realmente deve apontar para outra URL (por exemplo, versão sem parâmetros).",
         );
+      }
+      if (!canonicalError) {
+        push("canonical_ok", "success", "Tag canonical configurada corretamente.", "canonical");
       }
     } catch {
       push(
@@ -280,6 +288,7 @@ function evaluateSeo(
   // Robots
   if (meta.robots) {
     const robotsValue = meta.robots.toLowerCase();
+    let robotsWarning = false;
     if (robotsValue.includes("noindex")) {
       push(
         "robots_noindex",
@@ -288,6 +297,7 @@ function evaluateSeo(
         "robots",
         "Confirme se a intenção é realmente impedir a indexação desta página.",
       );
+      robotsWarning = true;
     }
     if (robotsValue.includes("nofollow")) {
       push(
@@ -298,6 +308,11 @@ function evaluateSeo(
         "Confirme se deseja realmente que os links desta página não sejam seguidos.",
       );
     }
+    if (!robotsWarning) {
+      push("robots_ok", "success", `Meta robots configurada: ${meta.robots}`, "robots");
+    }
+  } else {
+    push("robots_none", "success", "Sem meta robots (padrão: index, follow).", "robots");
   }
 
   // Language
@@ -309,6 +324,8 @@ function evaluateSeo(
       "lang",
       "Defina o atributo lang em <html>, por exemplo lang=\"pt-BR\".",
     );
+  } else {
+    push("lang_ok", "success", `Atributo lang presente: ${meta.lang}`, "lang");
   }
 
   // Charset
@@ -320,6 +337,8 @@ function evaluateSeo(
       "charset",
       "Defina <meta charset=\"utf-8\"> para garantir codificação consistente.",
     );
+  } else {
+    push("charset_ok", "success", `Meta charset definida: ${meta.charset}`, "charset");
   }
 
   // Open Graph (Facebook, Discord, Mastodon)
@@ -331,6 +350,8 @@ function evaluateSeo(
       "open_graph",
       "Inclua pelo menos og:title, og:description e og:image para uma boa pré-visualização em Facebook, Discord e Mastodon.",
     );
+  } else {
+    push("og_ok", "success", "Principais tags Open Graph configuradas.", "open_graph");
   }
 
   // Twitter Card (X)
@@ -342,26 +363,8 @@ function evaluateSeo(
       "twitter",
       'Adicione <meta name="twitter:card" content="summary_large_image"> para uma boa prévia no X (Twitter).',
     );
-  }
-
-  if (!twitter.title && openGraph.title) {
-    push(
-      "twitter_title_missing",
-      "info",
-      "twitter:title ausente, mas og:title presente.",
-      "twitter",
-      "Considere replicar o título do Open Graph nas metas do Twitter.",
-    );
-  }
-
-  if (!twitter.description && openGraph.description) {
-    push(
-      "twitter_description_missing",
-      "info",
-      "twitter:description ausente, mas og:description presente.",
-      "twitter",
-      "Considere replicar a descrição do Open Graph nas metas do Twitter.",
-    );
+  } else {
+    push("twitter_ok", "success", `Meta twitter:card presente: ${twitter.card}`, "twitter");
   }
 
   return issues;

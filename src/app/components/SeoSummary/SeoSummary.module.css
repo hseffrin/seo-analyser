@@ -1,0 +1,139 @@
+.container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.chartContainer {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.chart {
+    transform: rotate(-90deg);
+}
+
+.track {
+    fill: none;
+    stroke: #edf2f7;
+    stroke-width: 10;
+}
+
+.fill {
+    fill: none;
+    stroke: #38a169;
+    /* Default to success green */
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease-out, stroke 0.5s ease;
+}
+
+.fill.low {
+    stroke: #e53e3e;
+}
+
+.fill.mid {
+    stroke: #d69e2e;
+}
+
+.fill.high {
+    stroke: #38a169;
+}
+
+.scoreText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.scoreValue {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2d3748;
+    line-height: 1;
+}
+
+.scoreLabel {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #718096;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 200px;
+}
+
+.statItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.statDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.statDot.error {
+    background: #e53e3e;
+}
+
+.statDot.warning {
+    background: #d69e2e;
+}
+
+.statDot.success {
+    background: #38a169;
+}
+
+.statValue {
+    margin-left: auto;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.message {
+    width: 100%;
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.message.low {
+    color: #c53030;
+}
+
+.message.mid {
+    color: #974016;
+}
+
+.message.high {
+    color: #276749;
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
