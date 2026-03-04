@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import { sanitizeUrl, normalizeUrl } from "@/utils/url";
 
 type Severity = "info" | "warning" | "error" | "success";
 
@@ -47,59 +48,6 @@ export type SeoAnalysisResult = {
   twitter: TwitterMeta;
   issues: SeoIssue[];
 };
-
-/**
- * Sanitiza e normaliza a URL para evitar SSRF e remover rastreamento.
- * Força HTTPS, remove parâmetros UTM e valida o formato.
- */
-function sanitizeUrl(rawUrl: string): string {
-  let urlStr = rawUrl.trim();
-
-  // Adiciona protocolo se estiver faltando
-  if (!urlStr.match(/^[a-zA-Z]+:\/\//)) {
-    urlStr = "https://" + urlStr;
-  }
-
-  try {
-    const url = new URL(urlStr);
-
-    // Bloqueia protocolos que não sejam HTTP ou HTTPS (ex: file://, gopher://)
-    if (url.protocol !== "https:" && url.protocol !== "http:") {
-      throw new Error("Protocolo não suportado.");
-    }
-
-    // Força HTTPS
-    url.protocol = "https:";
-
-    // Remove âncoras (extra)
-    url.hash = "";
-
-    // Remove parâmetros UTM
-    const params = new URLSearchParams(url.search);
-    const keysToRemove: string[] = [];
-    params.forEach((_, key) => {
-      if (key.toLowerCase().startsWith("utm_")) {
-        keysToRemove.push(key);
-      }
-    });
-    keysToRemove.forEach((key) => params.delete(key));
-    url.search = params.toString();
-
-    return url.toString();
-  } catch (err) {
-    throw new Error(err instanceof Error ? err.message : "URL inválida.");
-  }
-}
-
-function normalizeUrl(rawUrl: string): string {
-  try {
-    const url = new URL(rawUrl);
-    url.hash = "";
-    return url.toString();
-  } catch {
-    return rawUrl.trim();
-  }
-}
 
 function extractMeta($: cheerio.CheerioAPI): {
   meta: BaseMeta;
