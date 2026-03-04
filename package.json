@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean": "npx rimraf node_modules .next",
+    "reinstall": "npm run clean && pnpm install --frozen-lockfile"
   },
   "dependencies": {
     "cheerio": "^1.1.0",
