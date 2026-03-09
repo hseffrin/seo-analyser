@@ -9,7 +9,8 @@
     "lint": "eslint",
     "clean": "npx rimraf node_modules .next",
     "reinstall": "npm run clean && pnpm install --frozen-lockfile",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "cheerio": "^1.1.0",
