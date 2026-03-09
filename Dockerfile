@@ -8,17 +8,18 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-# Stage 3: Development - For local dev and debugging
-FROM deps AS development
+FROM deps AS tests
 WORKDIR /app
 COPY . .
+RUN pnpm test
+
+# Stage 3: Development - For local dev and debugging
+FROM tests AS development
 # We don't mount volumes, but we still use pnpm dev for live reloading within the container
 CMD ["pnpm", "dev"]
 
 # Stage 4: Builder - Build the production standalone output
-FROM deps AS builder
-WORKDIR /app
-COPY . .
+FROM tests AS builder
 RUN pnpm build
 
 # Stage 5: Production Runner - Minimal image for production
