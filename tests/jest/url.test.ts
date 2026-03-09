@@ -1,4 +1,4 @@
-import { sanitizeUrl } from "../src/utils/url";
+import { sanitizeUrl } from "../../src/utils/url";
 
 describe("URL Validation (Back-end)", () => {
     test("Deve aceitar URLs válidas com https://", () => {
