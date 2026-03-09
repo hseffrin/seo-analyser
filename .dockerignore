@@ -11,8 +11,6 @@ yarn-error.log
 pnpm-debug.log
 README.md
 .eslintrc.json
-next-env.d.ts
-tsconfig.json
 .gemini
 .agents
 .agent
