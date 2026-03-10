@@ -1,33 +1,39 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .section {
   width: 100%;
+  background: var(--psi-card-bg);
+  border-radius: var(--psi-radius);
+  box-shadow: var(--psi-shadow);
+  padding: 1.5rem;
 }
 
 .sectionGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr);
-  gap: 1.25rem;
-  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .column {
-  min-width: 0;
+  width: 100%;
 }
 
 .previews {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
-@media (max-width: 900px) {
-  .sectionGrid {
-    grid-template-columns: minmax(0, 1fr);
+@media (min-width: 1024px) {
+  .previews {
+    grid-template-columns: 1fr 1fr;
   }
 }
 

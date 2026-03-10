@@ -80,9 +80,17 @@ test.describe('SEO Analyser Interface', () => {
         await page.click('button[type="submit"]');
 
         // Verifica se os componentes de resultado apareceram
-        await expect(page.locator('text=pontos')).toBeVisible();
+        const scoreValue = page.locator('span[class*="scoreValue"]');
+        await expect(scoreValue).toBeVisible();
         await expect(page.locator('text=Título de Exemplo para SEO')).toBeVisible();
-        await expect(page.locator('text=O título tem um bom tamanho')).toBeVisible();
+
+        // Verifica se os itens de sucesso aparecem (agora no topo)
+        const firstIssue = page.locator('ul[class*="list"]').first();
+        await expect(firstIssue).toContainText('O título tem um bom tamanho');
+
+        // Verifica os títulos das seções atualizadas
+        await expect(page.locator('text=Auditorias Passadas')).toBeVisible();
+        await expect(page.locator('text=Diagnósticos e Melhorias')).toBeVisible();
 
         // Verifica Preview do Google
         await expect(page.locator('text=Prévia aproximada no Google')).toBeVisible();

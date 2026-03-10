@@ -1,12 +1,36 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --psi-bg: #f8f9fa;
+  --psi-card-bg: #ffffff;
+  --psi-header-bg: #ffffff;
+  --psi-border: #dadce0;
+  
+  --psi-blue: #1a73e8;
+  --psi-red: #ff4e42;
+  --psi-orange: #ffa400;
+  --psi-green: #0cce6b;
+  
+  --psi-text-primary: #202124;
+  --psi-text-secondary: #5f6368;
+  
+  --psi-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+  --psi-radius: 8px;
+
+  --background: var(--psi-bg);
+  --foreground: var(--psi-text-primary);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --psi-bg: #202124;
+    --psi-card-bg: #2d2e31;
+    --psi-header-bg: #2d2e31;
+    --psi-border: #3c4043;
+    
+    --psi-text-primary: #e8eaed;
+    --psi-text-secondary: #9aa0a6;
+    
+    --background: var(--psi-bg);
+    --foreground: var(--psi-text-primary);
   }
 }
 
@@ -14,12 +38,12 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: var(--psi-bg);
+  color: var(--psi-text-primary);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -31,12 +55,10 @@ body {
 }
 
 a {
-  color: inherit;
+  color: var(--psi-blue);
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+a:hover {
+  text-decoration: underline;
 }

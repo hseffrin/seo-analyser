@@ -1,82 +1,113 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--psi-text-secondary);
 }
 
 .tabs {
-  display: inline-flex;
-  padding: 0.15rem;
-  border-radius: 999px;
-  background: #f3f4f6;
-  gap: 0.15rem;
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--psi-border);
+  padding-bottom: 0;
+  margin-bottom: 1rem;
 }
 
 .tab {
   border: none;
   background: transparent;
-  padding: 0.3rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  color: #6b7280;
+  padding: 0.75rem 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--psi-text-secondary);
   cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
 }
 
 .tabActive {
-  background: #111827;
-  color: #f9fafb;
+  color: var(--psi-blue);
+}
+
+.tabActive::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--psi-blue);
+  border-radius: 3px 3px 0 0;
 }
 
 .card {
-  border-radius: 0.9rem;
-  border: 1px solid #e5e7eb;
-  background: #111827;
-  color: #f9fafb;
+  border-radius: var(--psi-radius);
+  border: 1px solid var(--psi-border);
+  background: var(--psi-card-bg);
+  color: var(--psi-text-primary);
   overflow: hidden;
+  box-shadow: var(--psi-shadow);
 }
 
 .imageWrapper {
   width: 100%;
-  background: #020617;
+  background: var(--psi-bg);
+  border-bottom: 1px solid var(--psi-border);
 }
 
 .image {
   width: 100%;
-  padding-top: 52%;
+  padding-top: 52.25%; /* 1.91:1 ratio for OG */
   background-size: cover;
   background-position: center;
 }
 
 .content {
-  padding: 0.75rem 0.9rem 0.85rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.5rem;
 }
 
 .host {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--psi-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .title {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .description {
-  font-size: 0.8rem;
-  color: #e5e7eb;
+  font-size: 0.875rem;
+  color: var(--psi-text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .helper {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--psi-text-secondary);
+  line-height: 1.5;
+}
+
+.helper code {
+  background: var(--psi-bg);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
 }
 
